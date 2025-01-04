@@ -8,9 +8,9 @@
 	
 	fib:
 		# ris = fib(n-1) + fib(n-2)
-		# save registers
 		# a0 -> n
-		
+
+		# save registers
 		subi $sp, $sp, 16
 		sw $t0, 0($sp)
 		sw $t1, 4($sp)
@@ -25,12 +25,12 @@
 		ble $a0, 1, base_case
 		
 		subi $a0, $a0, 1 # $n - 1
-		# 1° chiamata ricorsiva
+		# 1° recursive call
 		jal fib
 		move $t1, $v0 # first result
 		
 		subi $a0, $a0, 1 # $n - 2
-		# 2° chiamata ricorsiva
+		# 2° recursive call
 		jal fib
 		move $t2, $v0 # second result
 		
@@ -40,6 +40,7 @@
 		li $v0, 1
 		j end_fib
 	end_fib:
+		# reset registers
 		lw $t0, 0($sp)
 		lw $t1, 4($sp)
 		lw $t2, 8($sp)
@@ -47,7 +48,6 @@
 		lw $a0, 16($sp)
 
 		addi $sp, $sp, 16
-		# reset registers
 		jr $ra
 	main:
 		lw $a0, input
